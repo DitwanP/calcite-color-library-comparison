@@ -1,0 +1,38 @@
+{
+  "name": "calcite-color-library-comparison",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Standalone app for comparing Culori and Color.js for Calcite theme colors",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "test": "jest --config src/apps/theme-builder/comparison/jest.config.js --runInBand",
+    "compare:color-bundles": "node scripts/compare-color-libraries.cjs"
+  },
+  "dependencies": {
+    "@esri/calcite-components": "^3.2.1",
+    "@esri/calcite-components-react": "^3.2.1",
+    "colorjs.io": "^0.7.1",
+    "culori": "^4.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.25.0",
+    "@babel/preset-typescript": "^7.12.16",
+    "@types/culori": "^4.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "babel-jest": "^29.7.0",
+    "esbuild": "^0.24.0",
+    "jest": "^29.7.0",
+    "sass": "^1.80.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.0"
+  },
+  "engines": {
+    "node": "22.8.0",
+    "npm": ">=10"
+  }
+}

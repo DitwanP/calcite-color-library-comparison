@@ -1,0 +1,124 @@
+.color-library-comparison {
+  margin: 0 auto;
+  max-width: 90rem;
+  padding: 1.5rem;
+
+  .color-comparison-controls,
+  .color-comparison-samples,
+  .color-comparison-states {
+    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block: 1rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  input,
+  select,
+  button {
+    background: var(--calcite-color-foreground-1);
+    border: 1px solid var(--calcite-color-border-input);
+    color: var(--calcite-color-text-1);
+    font: inherit;
+    min-height: 2.5rem;
+    padding: 0.5rem;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .color-comparison-columns {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .color-comparison-result {
+    border: 1px solid var(--calcite-color-border-2);
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  .color-comparison-preview {
+    background: var(--calcite-color-surface-1);
+    border: 2px solid var(--calcite-color-border-input);
+    color: var(--calcite-color-text-1);
+    padding: 1rem;
+
+    h3 {
+      color: inherit;
+    }
+  }
+
+  .color-comparison-states span {
+    color: var(--calcite-color-text-inverse);
+    padding: 0.75rem;
+  }
+
+  .color-comparison-link {
+    color: var(--calcite-color-text-link);
+    text-decoration: underline;
+  }
+
+  .color-comparison-highlight {
+    background: var(--calcite-color-surface-highlight);
+    padding: 0.75rem;
+  }
+
+  .color-comparison-swatches {
+    list-style: none;
+    padding: 0;
+
+    li {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-block: 0.5rem;
+    }
+
+    span {
+      border: 1px solid var(--calcite-color-border-2);
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .color-comparison-table,
+  pre {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--calcite-color-border-2);
+    padding: 0.5rem;
+    text-align: start;
+  }
+
+  summary {
+    cursor: pointer;
+    margin-block: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .color-comparison-columns {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
