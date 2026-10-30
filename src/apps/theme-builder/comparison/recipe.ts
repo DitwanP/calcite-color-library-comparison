@@ -31,9 +31,6 @@ export const SAMPLE_SEEDS = [
   { label: "Yellow", value: "#ffff00" },
   { label: "Cyan", value: "#00ffff" },
   { label: "Red", value: "#ff0000" },
-  { label: "Gray", value: "#808080" },
-  { label: "Black", value: "#000000" },
-  { label: "White", value: "#ffffff" }
 ];
 
 export const normalizeSeed = (value: string): string => {
