@@ -2,7 +2,7 @@
 
 An independent testing app for comparing Culori and Color.js as color-processing
 libraries for Calcite theme palettes. Both adapters run the same experimental
-11-token OKLCH recipe so their generated colors, gamut mapping, and contrast
+OKLCH recipe for Calcite's semantic color tokens so their generated colors, gamut mapping, and contrast
 results can be compared side by side.
 
 This is a library evaluation, not the Calcite theme builder or a production
@@ -36,12 +36,14 @@ mapping. The sample buttons provide a few repeatable test colors.
 - Culori and Color.js use functional imports and implement the same adapter
   contract: HEX/OKLCH conversion, gamut checks, HEX serialization, and WCAG
   contrast measurement.
-- The recipe creates 11 representative Calcite semantic color tokens in each
-  mode. It is intentionally not the full Calcite theme.
+- The Calcite defaults column reads values directly from the installed
+  Calcite Components stylesheet without color conversion or gamut mapping;
+  its contrast checks are measured with Culori.
 - Perceptual mapping uses each library's CSS-style algorithm, which can differ.
   Strict mapping reduces OKLCH chroma without an intentional perceptual
   clipping allowance.
-- Contrast is measured on final 8-bit HEX colors. Pass/fail uses each
+- Contrast is measured on final 8-bit HEX colors. Alpha color tokens remain CSS
+  `rgba()` values. Pass/fail uses each
   library's unrounded ratio. Their luminance coefficients can produce slightly
   different ratios for identical HEX pairs.
 - Both adapters use a `1e-7` sRGB gamut-boundary tolerance to ignore conversion

@@ -1,6 +1,14 @@
 import { culoriAdapter } from "./culori";
 import { colorjsAdapter } from "./colorjs";
-import { ComparisonMode, MappingMethod, SAMPLE_SEEDS, generateComparison, inSrgbGamut, normalizeSeed } from "./recipe";
+import {
+  ComparisonMode,
+  MappingMethod,
+  SAMPLE_SEEDS,
+  findOutOfGamutTokens,
+  generateComparison,
+  inSrgbGamut,
+  normalizeSeed
+} from "./recipe";
 import { createThemeCss } from "../helpers/theme-css";
 
 const adapters = [culoriAdapter, colorjsAdapter];
@@ -51,14 +59,21 @@ adapters.forEach(adapter => {
       for (const mapping of mappings) {
         test.each(SAMPLE_SEEDS)(`${mode}, ${mapping}: generates valid results for $label`, ({ value }) => {
           const result = generateComparison(adapter, value, mode, mapping);
-          expect(Object.keys(result.tokens)).toHaveLength(11);
+          expect(Object.keys(result.tokens)).toHaveLength(44);
+          for (const token of ["surface-1", "surface-2", "surface-3", "surface-4"]) {
+            expect(result.tokens).toHaveProperty(`--calcite-color-${token}`);
+          }
+          for (const token of ["background", "foreground-1", "foreground-2", "foreground-3", "foreground-current"]) {
+            expect(result.tokens).not.toHaveProperty(`--calcite-color-${token}`);
+          }
+          expect(result.tokens["--calcite-color-brand"]).toBe(result.seed);
           expect(result.contrastChecks).toHaveLength(8);
           expect(Object.values(result.source).every(Number.isFinite)).toBe(true);
           expect(result).toEqual(generateComparison(adapter, value, mode, mapping));
           expect(result.css.startsWith(`:root {\n  color-scheme: ${mode};\n`)).toBe(true);
           expect(result.css).not.toContain("calcite-mode-");
           Object.entries(result.tokens).forEach(([token, hex]) => {
-            expect(hex).toMatch(/^#[0-9a-f]{6}$/);
+            expect(hex).toMatch(/^(?:#[0-9a-f]{6}|rgba\(\d+, \d+, \d+, (?:0|0?\.\d+)\))$/);
             expect(result.css).toContain(`${token}: ${hex};`);
           });
           for (const check of result.contrastChecks) {
@@ -99,6 +114,24 @@ test("uses one explicit gamut tolerance for both libraries", () => {
   expect(inSrgbGamut([-0.00000001, 0.5, 1.00000001])).toBe(true);
   expect(inSrgbGamut([-0.000001, 0.5, 1])).toBe(false);
   expect(() => inSrgbGamut([NaN, 0, 0])).toThrow("invalid sRGB coordinates");
+});
+
+test("flags raw out-of-gamut colors without mapping them", () => {
+  const toHex = jest.fn(() => {
+    throw new Error("Raw colors must not be mapped.");
+  });
+  const adapter = {
+    ...culoriAdapter,
+    toHex,
+    toOklch: (value: string) => (value === "outside" ? { l: 0.7, c: 0.4, h: 150 } : culoriAdapter.toOklch(value))
+  };
+  const outOfGamutTokens = findOutOfGamutTokens(adapter, {
+    "--inside": "#007ac2",
+    "--outside": "outside"
+  });
+
+  expect(outOfGamutTokens).toEqual(["--outside"]);
+  expect(toHex).not.toHaveBeenCalled();
 });
 
 test.each(modes)("exports %s mode even without token overrides", mode => {

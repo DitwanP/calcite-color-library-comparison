@@ -1,6 +1,6 @@
 .color-library-comparison {
-  margin: 0 auto;
-  max-width: 90rem;
+  // margin: 0 auto;
+  // max-width: 90rem;
   padding: 1.5rem;
 
   .color-comparison-controls,
@@ -13,30 +13,10 @@
     margin-block: 1rem;
   }
 
-  label {
-    display: grid;
-    gap: 0.25rem;
-  }
-
-  input,
-  select,
-  button {
-    background: var(--calcite-color-foreground-1);
-    border: 1px solid var(--calcite-color-border-input);
-    color: var(--calcite-color-text-1);
-    font: inherit;
-    min-height: 2.5rem;
-    padding: 0.5rem;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
   .color-comparison-columns {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .color-comparison-result {
@@ -97,6 +77,19 @@
   .color-comparison-table,
   pre {
     overflow-x: auto;
+  }
+
+  .color-comparison-differences {
+    margin-block: 1.5rem;
+  }
+
+  .color-comparison-difference-swatch {
+    border: 1px solid var(--calcite-color-border-2);
+    display: inline-block;
+    height: 1rem;
+    margin-inline-end: 0.5rem;
+    vertical-align: middle;
+    width: 1rem;
   }
 
   table {
